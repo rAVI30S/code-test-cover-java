@@ -64,6 +64,7 @@ public class Soundex {
         }
         return soundex;
     }
+    
 
     private static char getSoundexCode(char c) {
         return soundexMap.getOrDefault(Character.toUpperCase(c), '0');
