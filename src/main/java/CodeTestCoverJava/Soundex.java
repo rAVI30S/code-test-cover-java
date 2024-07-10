@@ -34,25 +34,34 @@ public class Soundex {
 
         StringBuilder soundex = new StringBuilder();
         soundex.append(Character.toUpperCase(name.charAt(0)));
-        char prevCode = getSoundexCode(name.charAt(0));
 
-        for (int i = 1; i < name.length() && soundex.length() < 4; i++) {
-            char code = getSoundexCode(name.charAt(i));
+        String encodedString = encodeString(name.substring(1), soundex.charAt(0));
+        return padWithZeros(soundex.append(encodedString)).toString();
+    }
+
+    private static String encodeString(String name, char firstChar) {
+        StringBuilder encoded = new StringBuilder();
+        char prevCode = getSoundexCode(firstChar);
+
+        for (char c : name.toCharArray()) {
+            char code = getSoundexCode(c);
             if (code != '0' && code != prevCode) {
-                soundex.append(code);
+                encoded.append(code);
                 prevCode = code;
+                if (encoded.length() >= 3) break;
             }
         }
+        return encoded.toString();
+    }
 
+    private static StringBuilder padWithZeros(StringBuilder soundex) {
         while (soundex.length() < 4) {
             soundex.append('0');
         }
-
-        return soundex.toString();
+        return soundex;
     }
 
     private static char getSoundexCode(char c) {
-        c = Character.toUpperCase(c);
-        return soundexMap.getOrDefault(c, '0');
+        return soundexMap.getOrDefault(Character.toUpperCase(c), '0');
     }
 }
