@@ -45,13 +45,17 @@ public class Soundex {
 
         for (char c : name.toCharArray()) {
             char code = getSoundexCode(c);
-            if (code != '0' && code != prevCode) {
+            if (isValidCode(code, prevCode)) {
                 encoded.append(code);
                 prevCode = code;
                 if (encoded.length() >= 3) break;
             }
         }
         return encoded.toString();
+    }
+
+    private static boolean isValidCode(char code, char prevCode) {
+        return code != '0' && code != prevCode;
     }
 
     private static StringBuilder padWithZeros(StringBuilder soundex) {
