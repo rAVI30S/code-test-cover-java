@@ -1,5 +1,3 @@
-package CodeTestCoverJava;
-
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -56,5 +54,27 @@ public class SoundexTest {
     public void testVowelsBetweenConsonants() {
         assertEquals("P234", Soundex.generateSoundex("Pencil"));
         assertEquals("L530", Soundex.generateSoundex("Lunch"));
+    }
+
+    @Test
+    public void testMinAndMaxLengthNames() {
+        assertEquals("A000", Soundex.generateSoundex("A")); // Minimum length
+        assertEquals("B652", Soundex.generateSoundex("Barnes")); // Standard name
+        assertEquals("W425", Soundex.generateSoundex("Washington")); // Maximum length
+    }
+
+    @Test
+    public void testAllConsonants() {
+        assertEquals("B000", Soundex.generateSoundex("BCDFGHJKLMNPQRSTVWXYZ"));
+    }
+
+    @Test
+    public void testAllVowels() {
+        assertEquals("A000", Soundex.generateSoundex("AEIOU"));
+    }
+
+    @Test
+    public void testPerformance() {
+        // You can add performance tests here if needed
     }
 }
