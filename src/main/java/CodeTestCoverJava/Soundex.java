@@ -44,14 +44,18 @@ public class Soundex {
         char prevCode = getSoundexCode(firstChar);
 
         for (char c : name.toCharArray()) {
-            char code = getSoundexCode(c);
-            if (isValidCode(code, prevCode)) {
+            if (shouldEncodeChar(encoded, c, prevCode)) {
+                char code = getSoundexCode(c);
                 encoded.append(code);
                 prevCode = code;
-                if (encoded.length() >= 3) break;
             }
         }
         return encoded.toString();
+    }
+
+    private static boolean shouldEncodeChar(StringBuilder encoded, char c, char prevCode) {
+        char code = getSoundexCode(c);
+        return isValidCode(code, prevCode) && encoded.length() < 3;
     }
 
     private static boolean isValidCode(char code, char prevCode) {
@@ -64,7 +68,6 @@ public class Soundex {
         }
         return soundex;
     }
-    
 
     private static char getSoundexCode(char c) {
         return soundexMap.getOrDefault(Character.toUpperCase(c), '0');
